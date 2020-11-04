@@ -10,7 +10,8 @@ SELECT first_name, last_name, hire_date
 FROM employees
 	WHERE hire_date BETWEEN '1986-01-01' AND '1986-12-31';
 
---List the manager of each department with the following information: department number, department name, the manager's employee number, last name, first name.
+--List the manager of each department with the following information: department number, department name, the manager's employee number, 
+--last name, first name.
 SELECT dm.dept_no, d.dept_name, dm.emp_no, e.last_name, e.first_name
 FROM dept_manager AS dm
 	INNER JOIN departments AS d
@@ -42,7 +43,8 @@ FROM employees AS e
 WHERE d.dept_name = 'Sales';
 		
 
---List all employees in the Sales and Development departments, including their employee number, last name, first name, and department name.
+--List all employees in the Sales and Development departments, including their employee number, last name, first name, and department 
+--name.
 SELECT e.emp_no, e.last_name, e.first_name, d.dept_name
 FROM employees AS e
 	INNER JOIN dept_emp AS de
@@ -57,6 +59,34 @@ SELECT e.last_name,
 FROM employees AS e
 	GROUP BY last_name
 	ORDER BY "Frequency of last name" DESC;
+
+--Evidence in hand, you march into your boss's office and present the visualization. With a sly grin, your boss thanks you for your work.
+--On your way out of the office, you hear the words, "Search your ID number." You look down at your badge to see that your employee ID 
+--number is 499942
+SELECT * FROM employees
+	WHERE emp_no = 499942;
+
+-- Noticed that my first name, last name, and hire date were incorrectly inputted as Aprils Fools Day, funny joke
+-- Updated employee info to my actual name and set hire date to today, a return joke to my boss
+
+UPDATE employees
+SET (last_name, first_name, hire_date) = ('Field', 'Lydia', '2020-11-04')
+WHERE emp_no = 499942;
+
+-- Select columns to display after info has  been updated
+SELECT e.emp_no, e.last_name, e.first_name, e.hire_date, d.dept_name
+-- Select employees table as the first table to prepare for later joining
+FROM employees AS e
+	-- Join dept_emp table with employees on emp_no to link to the employee number with the department name
+	JOIN dept_emp AS de
+	ON e.emp_no = de.emp_no
+		-- Then join departments table to dept_emp to have department name
+		JOIN departments AS d
+		ON de.dept_no = d.dept_no
+-- Apply condition to only employee #499942
+WHERE e.emp_no = 499942;
+
+
 
 
 
